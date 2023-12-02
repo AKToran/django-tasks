@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+        {{ block.super }}
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<div class="categories row m-5 p-5 gap-5">
+
+    {% for i in categories %}
+
+
+    <div class="card col-4 p-2 shadow-lg" style="width: 18rem;">
+        <img src="{{i.strCategoryThumb}}" class="card-img-top" alt="categpry image">
+        <div class="card-body ">
+        <h6 class="card-title"> {{i.idCategory}} </h6>
+        <h5 class="card-title"> {{i.strCategory}} </h5>
+        <p class="card-text"> {{i.strCategoryDescription | truncatewords:10}} </p>
+        </div>
+    </div>
+
+
+
+{% endfor %}
+
+
+</div>
+
+{% endblock content %}
+

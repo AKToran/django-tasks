@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+        {{ block.super }}
+        <link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+    <div class="about row">
+        <div class="text col-8">
+            <h3 class="text-center p-2 pb-0 pt-3">About Us</h3>
+            <p class="p-2 pt-0">Established in 2020, 'Gourmet Junction' has been a culinary haven for food enthusiasts who appreciate the finest ingredients, expertly prepared dishes, and a welcoming atmosphere. Our journey began with a simple vision - to create a space where guests could indulge in a diverse array of flavors, all while enjoying the comforts of a home away from home. Remember, if you have any complaints: Don't Mess with Ramsy!</p>
+        </div>
+
+        <div class="col-4">
+
+            <img class="ramsy" src="{% static 'images/ramsy.png' %}" alt="">
+
+        </div>
+    </div>
+
+
+{% endblock content %}

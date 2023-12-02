@@ -1,0 +1,22 @@
+body{
+    overflow-x: hidden;
+}
+
+.about{
+    justify-content: center;
+    align-items: center;
+}
+
+.ramsy{
+    width: 904px;
+    margin-left: -170px;
+    margin-top: 56px;
+}
+
+.text{
+    height: 250px;
+    width: 500px;
+    margin-left: 100px;
+    background-color: #f8f9face;
+    border-radius: 20px;
+}
