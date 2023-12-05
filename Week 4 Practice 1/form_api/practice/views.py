@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .forms import Form
+from . import models
 
 # Create your views here.
 
@@ -14,3 +15,7 @@ def home(request):
 
     return render(request, 'home.html', {'form':form} )
 
+
+def model(request):
+    student = models.Student.objects.all()
+    return render(request, 'home.html', {'data': student})
