@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="text-center">All Available Tasks:</h1>
+
+    <div class="container">
+        <div class="row">
+            {% for task in tasks %}
+    
+            <div class="col-4 my-2">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title"> {{task.title}} </h5>
+                    <p class="card-text"> {{task.task_description}} </p>
+                    {% if task.is_completed == False %}
+                        <a href="{% url "edit_task" task.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url "delete_task" task.id %}" class="btn btn-danger">Delete</a>
+    
+                    {% else %}
+                        <h6 class="bg-primary text-light w-50 p-1 rounded-1 text-center">Completed</h6>
+                    
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            
+            {% endfor %}
+          </div>
+    </div>
+
+
+{% endblock content %}
