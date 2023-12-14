@@ -3,7 +3,7 @@ from . import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
 
 # Create your views here.
 
@@ -39,9 +39,9 @@ def reader_login(request):
                 messages.success(request,"Login successful.")
                 login(request, user)
                 return redirect('home')
-            else:
-                messages.warning(request,"Invalid username or password")
-                return redirect('login')
+        else:
+            messages.warning(request,"Invalid username or password")
+            return redirect('login')
     else:
         form = AuthenticationForm()
         return render(request, 'signup.html',{'form':form, 'type': 'Login'})
@@ -50,3 +50,33 @@ def reader_login(request):
 def reader_logout(request):
     logout(request)
     return redirect('login')
+
+def change_password(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = PasswordChangeForm(user=request.user, data=request.POST)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, request.user)
+                messages.success(request, 'Password changed successfully')
+                return redirect('profile')
+        else:
+            form = PasswordChangeForm(user=request.user)
+        return render(request, 'password_change.html', {'form': form})
+    else:
+        return redirect('login')
+    
+def set_password(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = SetPasswordForm(user=request.user, data=request.POST)
+            if form.is_valid():
+                form.save()
+                update_session_auth_hash(request, request.user)
+                messages.success(request, 'Password changed successfully')
+                return redirect('profile')
+        else:
+            form = SetPasswordForm(user=request.user)
+        
+        return render(request, 'password_change.html', {'form': form})
+    
