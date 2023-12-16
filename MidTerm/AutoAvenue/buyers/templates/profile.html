@@ -5,6 +5,9 @@
     {% comment %} <a href="{% url "edit_profile" %}" class="btn btn-primary">Edit Profile</a> {% endcomment %}
     <h4 class="text-center" >All your Cars:</h4>
         
-        
+    {% for car in cars %}
+        {{car.name}}
+    
+    {% endfor %}
        
 {% endblock content %}

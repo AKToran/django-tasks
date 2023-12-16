@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('brand/<slug:brand_slug>', views.home, name="filter_brand"),
     path('buyer/', include('buyers.urls')),
+    path('car/', include('cars.urls')),
  
 ]
 

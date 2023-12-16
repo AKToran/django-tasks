@@ -5,17 +5,19 @@
     <div class="d-flex mt-3 justify-content-center">
     {% for brand in brands %}
         <h6 class="ms-2">
-            <a class="btn btn-outline-warning m-1" 
+            <a class="btn btn-warning m-1" 
             style="width: 150px; font-weight: 600;"
             href="{% url "filter_brand" brand.slug %}">{{ brand.name }}</a>
         </h6>
     {% endfor %}
     </div>
-    <h3 class="text-center">{{cars | length}} cars available.</h3>
+    <h3 class="text-center m-2">Available Cars: {{cars | length}}</h3>
     <div class="d-flex flex-wrap justify-content-center m-2" >
         {% for car in cars %}
             <div class="col-md-4 col-sm-6 d-flex align-items-stretch">
-              <div class="card p-2 m-2 shadow w-100">
+              <div 
+              style="background-color: #E7DE63;"
+              class="card p-2 m-2 shadow w-100">
                 <div class="card-body">
                   {% if car.image %}
                   <img class="w-100 pb-2" src="{{car.image.url}}" alt="{{car.name}}">
@@ -25,8 +27,7 @@
                   
                   <h4 class="card-title"> {{car.name}} </h4>
                   
-                  <a href="" class="btn btn-success my-2">Details</a>
-                    
+                  <a href="{% url "details" car.id %}" class="btn btn-success my-2">Details</a>
 
                   <h6> Price: {{car.price}} TK </h6>
                 </div>

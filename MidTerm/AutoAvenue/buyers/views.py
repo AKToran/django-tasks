@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from cars.models import Cars
 from .forms import BuyerChangeForm, BuyerRegistrationForm
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
@@ -27,8 +27,8 @@ class BuyerLoginView(LoginView):
     
 @login_required
 def profile(request):
-    # data = Post.objects.filter(author = request.user)
-    return render(request, 'profile.html')
+    cars = Cars.objects.filter(buyer = request.user)
+    return render(request, 'profile.html', {'cars': cars})
 
 class BuyerLogoutView(LogoutView):
     def get_success_url(self):
