@@ -1,13 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
     
-    <h3 class="mt-4"> {{user}}'s Profile:</h3>
-    {% comment %} <a href="{% url "edit_profile" %}" class="btn btn-primary">Edit Profile</a> {% endcomment %}
-    <h4 class="text-center" >All your Cars:</h4>
-        
-    {% for car in cars %}
-        {{car.name}}
-    
-    {% endfor %}
+    <div class="container">
+        <h3 class="mt-4"> Hello, {{buyer.first_name}}  {{buyer.last_name}} </h3>
+        <a href="{% url "update_profile" buyer.id  %}" class="btn btn-primary">Edit Profile</a>
+    </div>
+
+    <div class="d-flex mt-4">
+      <div class="col-2 m-4">
+        <h5>Purchase History:</h5>
+       
+        {% for h in history %}
+        {% for car in h.cars.all %}
+        <div class="py-2">
+          Car: {{car.name}} <br>
+          Date: {{h.date}} <br>
+        </div>
+        {% endfor %}
+        {% endfor %}
+      </div>
+
+      <div class="d-flex flex-wrap justify-content-center col-9" >
+          {% for car in cars %}
+              <div class="col-md-6 col-sm-6 d-flex align-items-stretch">
+                <div 
+                style="background-color: #E7DE63;"
+                class="card p-2 m-2 shadow w-100">
+                  <div class="card-body">
+                    {% if car.image %}
+                    <img class="w-100 pb-2" src="{{car.image.url}}" alt="{{car.name}}">
+                    {% else %}
+                    <p>No Image Found!</p>
+                    {% endif %}
+                    
+                    <h4 class="card-title"> {{car.name}} </h4>
+                    
+                    <a href="{% url "details" car.id %}" class="btn btn-success my-2">Details</a>
+  
+                    <h6> Price: {{car.price}} TK </h6>
+                  </div>
+                </div>
+              </div>
+          {% endfor %}
+          </div>
+    </div>
        
 {% endblock content %}

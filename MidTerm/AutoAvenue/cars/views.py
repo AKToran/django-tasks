@@ -3,6 +3,8 @@ from . import forms
 from . import models
 from django.views.generic import DetailView
 from cars.models import Cars
+from buyers.models import BuyerHistory
+from buyers.forms import BuyerHistoryForm
 
 class CarDetailsView(DetailView):
     model = models.Cars
@@ -24,13 +26,23 @@ class CarDetailsView(DetailView):
         comments = car.comments.all()
         comment_form = forms.CommentForm()
         
+        if self.request.user.is_authenticated:
+            data ={
+                'name': self.request.user.username,
+                'email': self.request.user.email,
+            }
+            comment_form = forms.CommentForm(initial=data)
+
         context['comments'] = comments
         context['comment_form'] = comment_form
         return context
 
-def BuyCar(request):
+def BuyCar(request, id):
     car = Cars.objects.get(id=id)
     car.quantity = car.quantity-1
+    add_history = BuyerHistory.objects.create(buyer = request.user)
+    add_history.cars.set([car])
+    add_history.save()
     car.buyer.set ([request.user])
     car.save()
     return redirect('profile')

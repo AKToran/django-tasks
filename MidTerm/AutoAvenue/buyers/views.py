@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from cars.models import Cars
+from django.contrib.auth.models import User
 from .forms import BuyerChangeForm, BuyerRegistrationForm
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from .models import BuyerHistory
 
 
 class BuyerRegisterView(CreateView):
@@ -28,7 +30,22 @@ class BuyerLoginView(LoginView):
 @login_required
 def profile(request):
     cars = Cars.objects.filter(buyer = request.user)
-    return render(request, 'profile.html', {'cars': cars})
+    buyer = request.user
+    history = BuyerHistory.objects.filter(buyer = request.user)
+    # for h in history:
+    #     print(h.date)
+    #     print(h.buyer.first_name)
+    #     for car in h.cars.all():
+    #         print(car.name)
+    return render(request, 'profile.html', {'cars': cars, 'buyer': buyer, 'history': history})
+
+class UpdateProfileView(UpdateView):
+    model = User
+    form_class = BuyerChangeForm
+    template_name = 'update_profile.html'
+    success_url = reverse_lazy('profile')
+    pk_url_kwarg = 'id'
+
 
 class BuyerLogoutView(LogoutView):
     def get_success_url(self):

@@ -21,6 +21,8 @@
         <h6> Price: {{cars.price}} TK </h6> 
         {% if request.user.is_authenticated and cars.quantity > 0 %}
         <a href="{% url "buy" cars.id %}" class="btn btn-info"> Buy Now </a>
+        {% else %}
+        <h5>Out of Stock!</h5>
         {% endif %}
       
       </div>
